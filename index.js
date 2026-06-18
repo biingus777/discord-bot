@@ -1,3 +1,21 @@
+// 1. Importy (require, const client = new Client(), itp.)
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+// 2. TUTAJ DODAJ KOD DO CZYSZCZENIA KOMEND
+if (process.env.CLEAR_COMMANDS === 'true') {
+  client.once('ready', async () => {
+    try {
+      await client.application.commands.set([]);
+      console.log('✅ Komendy wyczyszczone!');
+      process.exit(0);
+    } catch (error) {
+      console.error('❌ Błąd przy czyszczeniu komend:', error);
+      process.exit(1);
+    }
+  });
+}
+
 const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
